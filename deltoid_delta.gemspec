@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
-  s.date = %q{2010-11-22}
+  s.date = %q{2010-11-23}
   s.description = %q{Delta indexing plugin for Thinking Sphinx that sets a reindex flag in memcached whenever a model needs to be reindexed.
   It is expected to be used along with the Deltoid daemon, which polls memcached and rebuilds indices whenever the reindex 
   flags are set.}
@@ -21,14 +21,20 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
+    ".rvmrc",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "deltoid_delta.gemspec",
+    "lib/deltoid_delta.rb",
+    "lib/deltoid_delta/tasks.rb",
+    "spec/deltoid_delta_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/nerds-at-getsatisfaction-dot-com/ts-deltoid-delta}
+  s.homepage = %q{http://github.com/satisfaction/deltoid_delta}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
@@ -43,14 +49,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<thinking-sphinx>, [">= 1.3.6"])
+      s.add_runtime_dependency(%q<ts-datetime-delta>, ["~> 1.0.2"])
       s.add_development_dependency(%q<rspec>, ["~> 2.1.0"])
       s.add_development_dependency(%q<yard>, ["~> 0.6.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
-      s.add_dependency(%q<thinking-sphinx>, [">= 1.3.6"])
+      s.add_dependency(%q<ts-datetime-delta>, ["~> 1.0.2"])
       s.add_dependency(%q<rspec>, ["~> 2.1.0"])
       s.add_dependency(%q<yard>, ["~> 0.6.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
@@ -58,7 +64,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
-    s.add_dependency(%q<thinking-sphinx>, [">= 1.3.6"])
+    s.add_dependency(%q<ts-datetime-delta>, ["~> 1.0.2"])
     s.add_dependency(%q<rspec>, ["~> 2.1.0"])
     s.add_dependency(%q<yard>, ["~> 0.6.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])

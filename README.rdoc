@@ -1,4 +1,4 @@
-= ts-deltoid-delta
+= deltoid_delta
 
 Delta indexing plugin for Thinking Sphinx that sets a reindex flag in memcached whenever a model needs to be reindexed.
 It is expected to be used along with the Deltoid daemon, which polls memcached and rebuilds indices whenever the reindex 
