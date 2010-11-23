@@ -5,6 +5,8 @@ source "http://rubygems.org"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
+gem "ts-datetime-delta", "~> 1.0.2"
+
 group :development do
   gem "rspec", "~> 2.1.0"
   gem "yard", "~> 0.6.0"
