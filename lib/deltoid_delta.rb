@@ -10,7 +10,7 @@ class DeltoidDelta < ThinkingSphinx::Deltas::DatetimeDelta
   # ===== STALE FLAG ===================================================================================================
   
   def self.stale_cache_key_for(model, instance = nil)
-    "#{model.name.underscore}_is_stale"
+    "#{ActiveSupport::Inflector.underscore(model.name)}_index_is_stale"
   end
   
   def self.mark_index_as_stale(model, instance = nil)
