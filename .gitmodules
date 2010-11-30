@@ -1,0 +1,3 @@
+[submodule "vendor/deltoid_daemon"]
+	path = vendor/deltoid_daemon
+	url = git://github.com/satisfaction/deltoid_daemon.git
