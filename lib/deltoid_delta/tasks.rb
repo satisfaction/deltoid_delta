@@ -34,9 +34,12 @@ namespace :deltoid do
       "-l '#{@deltoid_log_file}'",
       "--config log_dir='#{@deltoid_log_directory}'",
       "--pidfile '#{@deltoid_pid_file}'",
-      "-c '#{@deltoid_sphinx_config}'",
-      "-m '#{@deltoid_memcached_yml}'"
+      "-c '#{@deltoid_sphinx_config}'"
     ]
+    
+    if File.exist?(@deltoid_memcached_yml)
+      @deltoid_options << "-m '#{@deltoid_memcached_yml}'"
+    end
     
     @deltoid_start = "'#{@deltoid_bin}' start #{@deltoid_options.join(" \\\n  ")}"
     @deltoid_stop = "'#{@deltoid_bin}' stop #{@deltoid_options.join(" \\\n  ")}"
