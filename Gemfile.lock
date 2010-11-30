@@ -23,6 +23,7 @@ GEM
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
+    memcache-client (1.8.5)
     rake (0.8.7)
     rcov (0.9.9)
     riddle (1.2.1)
@@ -52,6 +53,7 @@ DEPENDENCIES
   bundler (~> 1.0.0)
   daemon-kit (= 0.1.8.1)
   jeweler (~> 1.5.1)
+  memcache-client
   rcov
   rspec (~> 2.1.0)
   rufus-scheduler (>= 2.0.3)

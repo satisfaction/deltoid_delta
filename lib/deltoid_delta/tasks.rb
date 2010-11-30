@@ -41,6 +41,7 @@ namespace :deltoid do
       @deltoid_options << "-m '#{@deltoid_memcached_yml}'"
     end
     
+    @deltoid_run = "'#{@deltoid_bin}' #{@deltoid_options.join(" \\\n  ")}"
     @deltoid_start = "'#{@deltoid_bin}' start #{@deltoid_options.join(" \\\n  ")}"
     @deltoid_stop = "'#{@deltoid_bin}' stop #{@deltoid_options.join(" \\\n  ")}"
   end
@@ -64,6 +65,11 @@ namespace :deltoid do
     puts "Stop command:"
     puts "  '#{@deltoid_bin}' stop \\"
     puts "    #{@deltoid_options.join(" \\\n    ")}"
+  end
+  
+  desc %{Runs the deltoid daemon process in the foreground}
+  task :run => "deltoid:init" do
+    sh @deltoid_run
   end
   
   desc %{Starts the deltoid daemon process}
