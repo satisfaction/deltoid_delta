@@ -82,4 +82,7 @@ namespace :deltoid do
     sh @deltoid_stop
   end
   
+  desc %{Restarts the deltoid daemon process}
+  task :restart => %w[stop start]
+  
 end
