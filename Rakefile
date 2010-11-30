@@ -30,6 +30,7 @@ Jeweler::Tasks.new do |gem|
   gem.files.exclude ".rspec"
   gem.files.exclude ".rvmrc"
   gem.files.include 'vendor/deltoid_daemon/**/*'
+  gem.files.exclude 'vendor/deltoid_daemon/log/*.log'
 end
 Jeweler::RubygemsDotOrgTasks.new
 

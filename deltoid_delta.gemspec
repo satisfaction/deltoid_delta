@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{deltoid_delta}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "vendor/deltoid_daemon/config/environment.rb",
     "vendor/deltoid_daemon/config/environments/development.rb",
     "vendor/deltoid_daemon/config/environments/production.rb",
+    "vendor/deltoid_daemon/config/environments/staging.rb",
     "vendor/deltoid_daemon/config/environments/test.rb",
     "vendor/deltoid_daemon/config/post-daemonize/readme",
     "vendor/deltoid_daemon/config/pre-daemonize/cron.rb",
