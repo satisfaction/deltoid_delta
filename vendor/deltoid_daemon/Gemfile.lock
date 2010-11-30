@@ -1,0 +1,32 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    daemon-kit (0.1.8.1)
+      eventmachine (>= 0.12.10)
+    diff-lcs (1.1.2)
+    eventmachine (0.12.10)
+    memcache-client (1.8.5)
+    rake (0.8.7)
+    riddle (1.2.1)
+    rspec (2.1.0)
+      rspec-core (~> 2.1.0)
+      rspec-expectations (~> 2.1.0)
+      rspec-mocks (~> 2.1.0)
+    rspec-core (2.1.0)
+    rspec-expectations (2.1.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.1.0)
+    rufus-scheduler (2.0.7)
+      tzinfo
+    tzinfo (0.3.23)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  daemon-kit
+  memcache-client
+  rake
+  riddle
+  rspec (~> 2.1.0)
+  rufus-scheduler (>= 2.0.3)
