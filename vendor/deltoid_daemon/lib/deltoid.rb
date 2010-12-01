@@ -132,7 +132,9 @@ class Deltoid
   end
   
   def cache_get(key)
-    cache.get(key, true)
+    unless cache.retry && cache.retry > Time.now
+      cache.get(key, true)
+    end
   rescue MemCache::MemCacheError => e
     if e.message =~ /Timeout\:\:Error/
       logger.debug(e.class.name + ": " + e.message)
