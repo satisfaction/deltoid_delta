@@ -66,7 +66,7 @@ class Deltoid
   
   def stale_index_prefixes
     delta_index_prefixes.select { |index_prefix|
-      cache.get(memcached_key_for_index(index_prefix), true) != nil
+      cache_get(memcached_key_for_index(index_prefix)) != nil
     }
   end
   
@@ -91,7 +91,7 @@ class Deltoid
   end
   
   def clear_stale_index_with_prefix(index_prefix)
-    cache.delete(memcached_key_for_index(index_prefix))
+    cache_delete(memcached_key_for_index(index_prefix))
   end
   
   def memcached_key_for_index(index_prefix)
@@ -124,6 +124,21 @@ class Deltoid
         MemCache.new('localhost:11211')
       end
       
+  end
+  
+  def cache_get(key)
+    cache.get(key, true)
+  rescue MemCache::MemCacheError => e
+    if e.message =~ /Timeout\:\:Error/
+      logger.debug(e.class.name + ": " + e.message)
+      nil
+    else
+      raise
+    end
+  end
+  
+  def cache_delete(key)
+    cache.delete(key)
   end
   
   # ===== REINDEXING ===================================================================================================
