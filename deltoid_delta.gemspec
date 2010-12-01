@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{deltoid_delta}
-  s.version = "0.0.8"
+  s.version = "0.0.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
-  s.date = %q{2010-11-30}
+  s.date = %q{2010-12-01}
   s.description = %q{Delta indexing plugin for Thinking Sphinx that sets a reindex flag in memcached whenever a model needs to be reindexed.
   It is expected to be used along with the Deltoid daemon, which polls memcached and rebuilds indices whenever the reindex 
   flags are set.}
