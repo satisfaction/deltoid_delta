@@ -132,7 +132,7 @@ class Deltoid
   end
   
   def cache_get(key)
-    unless cache.retry && cache.retry > Time.now
+    unless cache.servers.all? { |server| server.retry && server.retry > Time.now }
       cache.get(key, true)
     end
   rescue MemCache::MemCacheError => e
