@@ -111,17 +111,22 @@ class Deltoid
         memcache_configs = YAML.load_file(memcached_config_file)
         if active_config = memcache_configs[DAEMON_ENV]
           defaults = memcache_configs['defaults'] || {}
+          
           active_config = defaults.merge(active_config)
+          active_config.keys.each do |config_key|
+            active_config[config_key.to_sym] = active_config.delete(config_key)
+          end
+          active_config[:multithread] = true
+          logger.debug("Using memcache config: #{active_config.inspect}")
           
-          servers = active_config.delete('servers')
-          
+          servers = active_config.delete(:servers)
           MemCache.new(*([servers, active_config].flatten))
         else
-          MemCache.new('localhost:11211')
+          MemCache.new('localhost:11211', :multithread => true)
         end
         
       else
-        MemCache.new('localhost:11211')
+        MemCache.new('localhost:11211', :multithread => true)
       end
       
   end

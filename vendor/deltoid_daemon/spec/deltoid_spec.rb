@@ -254,12 +254,9 @@ describe Deltoid do
       @deltoid = Deltoid.new
       @deltoid.should_receive(:delta_index_prefixes).and_return(%w[person robot beast])
       
-      @cache_stub = stub("MemCache")
-      @deltoid.should_receive(:cache).any_number_of_times.and_return(@cache_stub)
-      
-      @cache_stub.should_receive(:get).with("person_index_is_stale", true).and_return(1)
-      @cache_stub.should_receive(:get).with("robot_index_is_stale", true).and_return(nil)
-      @cache_stub.should_receive(:get).with("beast_index_is_stale", true).and_return("1")
+      @deltoid.should_receive(:cache_get).with("person_index_is_stale").and_return(1)
+      @deltoid.should_receive(:cache_get).with("robot_index_is_stale").and_return(nil)
+      @deltoid.should_receive(:cache_get).with("beast_index_is_stale").and_return("1")
     end
     
     it "should iterate through each delta index and return which are stale" do
@@ -304,7 +301,7 @@ describe Deltoid do
     describe "when no memcached config was provided" do
       
       it "should contact a local memcached on the default port" do
-        MemCache.should_receive(:new).with('localhost:11211')
+        MemCache.should_receive(:new).with('localhost:11211', :multithread => true)
         Deltoid.new.cache
       end
       
@@ -336,7 +333,7 @@ describe Deltoid do
       it "should use the options for the current environment, merged with the 'defaults' config" do
         DAEMON_ENV.should == 'test'
         
-        MemCache.should_receive(:new).with('localhost:11211', 'localhost:11212', 'multithread' => true, 'timeout' => 2.0)
+        MemCache.should_receive(:new).with('localhost:11211', 'localhost:11212', :multithread => true, :timeout => 2.0)
         @deltoid.cache
       end
       
