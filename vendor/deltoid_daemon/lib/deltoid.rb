@@ -114,7 +114,12 @@ class Deltoid
           
           active_config = defaults.merge(active_config)
           active_config.keys.each do |config_key|
-            active_config[config_key.to_sym] = active_config.delete(config_key)
+            value = active_config.delete(config_key)
+            
+            # skip blank values, which will prevent memcache-client defaults from appearing
+            if value != nil && (!value.kind_of?(String) || value =~ /\S/)
+              active_config[config_key.to_sym] = value
+            end
           end
           active_config[:multithread] = true
           logger.debug("Using memcache config: #{active_config.inspect}")
