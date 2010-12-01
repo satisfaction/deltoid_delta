@@ -50,6 +50,10 @@ namespace :deltoid do
       @deltoid_options << "-m '#{@deltoid_memcached_yml}'"
     end
     
+    if ENV['DELTOID_SCHEDULE'].present?
+      @deltoid_options << "-S '#{ENV['DELTOID_SCHEDULE']}'"
+    end
+    
     @deltoid_run = "'#{@deltoid_bin}' #{@deltoid_options.join(" \\\n  ")}"
     @deltoid_start = "'#{@deltoid_bin}' start #{@deltoid_options.join(" \\\n  ")}"
     @deltoid_stop = "'#{@deltoid_bin}' stop #{@deltoid_options.join(" \\\n  ")}"
