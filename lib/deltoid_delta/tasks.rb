@@ -22,7 +22,16 @@ namespace :deltoid do
     @deltoid_bin_dir = File.expand_path("./bin", @deltoid_root)
     @deltoid_bin = File.expand_path("./deltoid", @deltoid_bin_dir)
     
-    @deltoid_sphinx_config = File.expand_path("./config/#{@deltoid_env}.sphinx.conf", Rails.root)
+    sphinx_yml_path = File.expand_path("./config/sphinx.yml", Rails.root)
+    if File.exist?(sphinx_yml_path)
+      sphinx_yml_data = YAML.load_file(sphinx_yml_path)
+      active_config = sphinx_yml_data[@deltoid_env]
+      if active_config && active_config['config_file']
+        @deltoid_sphinx_config = File.expand_path(active_config['config_file'], Rails.root)
+      end
+    end
+    
+    @deltoid_sphinx_config ||= File.expand_path("./config/#{@deltoid_env}.sphinx.conf", Rails.root)
     @deltoid_memcached_yml = File.expand_path("./config/memcached.yml", Rails.root)
     
     @deltoid_log_directory = File.expand_path("./log", Rails.root)
