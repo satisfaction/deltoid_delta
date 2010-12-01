@@ -66,7 +66,7 @@ class Deltoid
   
   def stale_index_prefixes
     delta_index_prefixes.select { |index_prefix|
-      cache.get(memcached_key_for_index(index_prefix)) != nil
+      cache.get(memcached_key_for_index(index_prefix), true) != nil
     }
   end
   
