@@ -16,7 +16,7 @@ class Deltoid
   
   def check_path_for_executables!
     %w[pgrep indexer searchd].each do |command|
-      `which -s #{command}`
+      `which #{command}`
       if $?.exitstatus != 0
         logger.error("Failed to find #{command.inspect} command on the PATH!")
       end
