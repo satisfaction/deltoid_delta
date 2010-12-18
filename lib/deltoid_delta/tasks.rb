@@ -97,5 +97,11 @@ namespace :deltoid do
   
   desc %{Restarts the deltoid daemon process}
   task :restart => %w[stop start]
-  
+
+  desc %{Sends a signal causing Deltoid to do a full reindex}
+  task :reindex do
+    pid = `ps ax`.grep(/deltoid/)[0].split[0].to_i
+    Process.kill("USR1", pid)
+  end
+
 end

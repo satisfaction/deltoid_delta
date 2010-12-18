@@ -9,6 +9,9 @@ DaemonKit::Application.running! do |config|
   #   # do something clever
   # end
   # config.trap( 'TERM', Proc.new { puts 'Going down' } )
+  config.trap('USR1') do
+    DELTOID.reindex_main_indexes!(true)
+  end
 end
 
 # Configuration documentation available at http://rufus.rubyforge.org/rufus-scheduler/
