@@ -1,3 +1,5 @@
+require 'drb'
+
 # Generated cron daemon
 
 # Do your post daemonization configuration here
@@ -12,6 +14,7 @@ DaemonKit::Application.running! do |config|
   config.trap('USR1') do
     DELTOID.reindex_main_indexes!(true)
   end
+
 end
 
 # Configuration documentation available at http://rufus.rubyforge.org/rufus-scheduler/
@@ -62,6 +65,10 @@ end
 DaemonKit::Cron.scheduler.cron(DaemonKit.arguments.options[:main_indexing_schedule] || "0 0 * * *") do
   DELTOID.reindex_main_indexes!(true)
 end
+
+DRb.start_service 'druby://localhost:2250', DeltoidStatusServer.new(DELTOID)
+DELTOID.logger.info("Stats server at #{DRb.uri}")
+DRb.thread.join
 
 # Run our 'cron' dameon, suspending the current thread
 DaemonKit::Cron.run
