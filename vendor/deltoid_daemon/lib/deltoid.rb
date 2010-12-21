@@ -2,6 +2,7 @@
 # already included in your load path, so no need to specify it.
 require 'thread'
 require 'memcache'
+require 'drb'
 
 class Deltoid
   
@@ -28,7 +29,7 @@ class Deltoid
   def sphinx_config_file
     @sphinx_config_file || DaemonKit.arguments.options[:sphinx_config_file]
   end
-  
+
   def sphinx_pid
     result = `pgrep searchd`.strip.to_i
     if result > 0
@@ -191,6 +192,8 @@ class Deltoid
       stale_index_prefixes = self.stale_index_prefixes
       if stale_index_prefixes.count > 0
         logger.info "Found #{stale_index_prefixes.count} stale indexes: #{stale_index_prefixes.inspect}"
+
+        start = Time.now
         
         # clear the flags in memcached
         stale_index_prefixes.each do |index_prefix|
@@ -199,6 +202,11 @@ class Deltoid
         
         # reindex the stale indexes...
         run_indexer_for_stale_indexes(stale_index_prefixes)
+
+        @last_delta_index_time = Time.now - start
+
+        @delta_index_count = 0 if @delta_index_count.nil?
+        @delta_index_count += 1
       end
       
     end
@@ -209,6 +217,8 @@ class Deltoid
     index_block(blocking) do
       logger.info "Reindexing main+delta indexes"
       
+      start = Time.now
+
       # reset any dirty flags, since we'll reindex everything...
       delta_index_prefixes.each do |index_prefix|
         clear_stale_index_with_prefix(index_prefix)
@@ -217,6 +227,11 @@ class Deltoid
       result = `indexer --config "#{sphinx_config_file}" #{"--rotate" if sphinx_running?} --all`
       if $?.exitstatus == 0
         logger.info(result)
+
+        @last_core_index_time = Time.now - start
+
+        @core_index_count = 0 if @core_index_count.nil?
+        @core_index_count += 1
                 
         true
       else
@@ -226,5 +241,32 @@ class Deltoid
       end
     end
   end
+
+  def get_status
+    status = {
+      :delta_index_count => @delta_index_count || 0,
+      :core_index_count => @core_index_count || 0,
+      :last_delta_index_time => @last_delta_index_time || 0,
+      :last_core_index_time => @last_core_index_time || 0
+    }
+
+    status.to_yaml
+  end
+
   
+end
+
+# ===== STATS SERVER =================================================================================================
+
+class DeltoidStatusServer
+  include DRbUndumped
+
+  def initialize(deltoid)
+    @deltoid = deltoid
+  end
+
+  def get_status
+    @deltoid.get_status
+  end
+
 end
