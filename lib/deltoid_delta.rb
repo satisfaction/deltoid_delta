@@ -2,16 +2,7 @@ require 'thinking_sphinx'
 require 'thinking_sphinx/deltas/datetime_delta'
 
 class DeltoidDelta < ThinkingSphinx::Deltas::DatetimeDelta
-  
-  def initialize(index, options = {})
-    super
-    
-    index.sources.first.options[:sql_query_killlist] ||=
-      "SELECT #{index.model.connection.quote_column_name(index.model.primary_key_for_sphinx)} " +
-      "FROM #{index.model.quoted_table_name} " +
-      "WHERE #{self.clause(index.model, true)}"
-  end
-  
+ 
   def index(model, instance = nil)
     self.class.mark_index_as_stale(model, instance)
   end
