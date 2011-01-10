@@ -15,6 +15,10 @@ opts.on('-c', '--config CONFIG', 'Location of sphinx config file') do |sphinx_co
   @options[:sphinx_config_file] = File.expand_path(sphinx_config)
 end
 
+opts.on('-s', '--sphinx-yml CONFIG', 'Location of sphinx yaml config file') do |sphinx_yaml|
+  @options[:sphinx_yaml_file] = File.expand_path(sphinx_yaml)
+end
+
 opts.on('-m', '--memcached-yml CONFIG', 'Location of memcached YAML config file') do |memcached_yml|
   @options[:memcached_yml_file] = File.expand_path(memcached_yml)
 end

@@ -56,7 +56,15 @@ else
 end
 
 DaemonKit::Cron.scheduler.every("1s") do
-  DELTOID.reindex_stale_delta_indexes!
+  sphinx_yaml_config = YAML.load_file(DELTOID.sphinx_yaml_file)
+  sphinx_index_path = sphinx_yaml_config["searchd_file_path"]
+
+  # Skip indexing if indexer appears to still be running
+  if Dir.glob("#{sphinx_index_path}/*delta*new*").any?
+    DELTOID.logger.info("Found 'new' index files, skipping indexing")
+  else
+    DELTOID.reindex_stale_delta_indexes!
+  end
 end
 
 DaemonKit::Cron.scheduler.cron(DaemonKit.arguments.options[:main_indexing_schedule] || "0 0 * * *") do

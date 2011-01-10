@@ -5,9 +5,10 @@ require 'memcache'
 
 class Deltoid
   
-  def initialize(sphinx_config_file = nil, memcached_config_file = nil)
+  def initialize(sphinx_config_file = nil, memcached_config_file = nil, sphinx_yaml_file = nil)
     @sphinx_config_file     = sphinx_config_file
     @memcached_config_file  = memcached_config_file
+    @sphinx_yaml_file       = sphinx_yaml_file
   end
   
   def logger
@@ -27,6 +28,10 @@ class Deltoid
   
   def sphinx_config_file
     @sphinx_config_file || DaemonKit.arguments.options[:sphinx_config_file]
+  end
+
+  def sphinx_yaml_file
+    @sphinx_yaml_file || DaemonKit.arguments.options[:sphinx_yaml_file]
   end
   
   def sphinx_pid
