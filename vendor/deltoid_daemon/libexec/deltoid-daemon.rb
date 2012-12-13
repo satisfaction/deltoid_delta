@@ -62,7 +62,7 @@ DaemonKit::Cron.scheduler.every("1s") do
   DELTOID.reindex_stale_delta_indexes!
 end
 
-DaemonKit::Cron.scheduler.cron(DaemonKit.arguments.options[:main_indexing_schedule] || "0 0 * * *") do
+DaemonKit::Cron.scheduler.cron(DaemonKit.arguments.options[:main_indexing_schedule] || "0 8 * * *") do
   DELTOID.reindex_main_indexes!(true)
 end
 
