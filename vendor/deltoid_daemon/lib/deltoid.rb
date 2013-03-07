@@ -3,6 +3,7 @@
 require 'thread'
 require 'memcache'
 require 'drb'
+require 'yaml'
 
 class Deltoid
   
@@ -109,7 +110,7 @@ class Deltoid
     @cache ||=
       if memcached_config_file
         
-        memcache_configs = YAML.load_file(memcached_config_file)
+        memcache_configs = ::YAML.load_file(memcached_config_file)
         if active_config = memcache_configs[DAEMON_ENV]
           defaults = memcache_configs['defaults'] || {}
           

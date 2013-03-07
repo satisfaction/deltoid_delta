@@ -1,3 +1,5 @@
+require 'yaml'
+
 namespace :thinking_sphinx do
   
   desc "Marks all indexes as stale, forcing a delta reindex"
@@ -24,7 +26,7 @@ namespace :deltoid do
     
     sphinx_yml_path = File.expand_path("./config/sphinx.yml", Rails.root)
     if File.exist?(sphinx_yml_path)
-      sphinx_yml_data = YAML.load_file(sphinx_yml_path)
+      sphinx_yml_data = ::YAML.load_file(sphinx_yml_path)
       active_config = sphinx_yml_data[@deltoid_env]
       if active_config && active_config['config_file']
         @deltoid_sphinx_config = File.expand_path(active_config['config_file'], Rails.root)

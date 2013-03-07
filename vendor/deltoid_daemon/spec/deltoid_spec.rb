@@ -316,7 +316,7 @@ describe Deltoid do
           'multithread' => true
         }
         
-        YAML.should_receive(:load_file, 'memcached.yml').and_return({
+        ::YAML.should_receive(:load_file, 'memcached.yml').and_return({
           'development' => {
             'servers' => [ 'localhost:11211' ]
           },
