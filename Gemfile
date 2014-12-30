@@ -9,14 +9,11 @@ gem "activesupport", ">= 2.3.5"
 gem "ts-datetime-delta", "~> 1.0.2"
 
 # deltoid daemon dependencies
-gem "daemon-kit", "0.1.8.1"
+gem "daemon-kit"
 gem 'rufus-scheduler', '>= 2.0.3'
 gem 'memcache-client'
 
 group :development do
   gem "rspec", "~> 2.1.0"
-  gem "yard", "~> 0.6.0"
-  gem "bundler", "~> 1.0.0"
-  gem "jeweler", "~> 1.5.1"
-  gem "rcov", ">= 0"
+  gem "bundler"
 end
