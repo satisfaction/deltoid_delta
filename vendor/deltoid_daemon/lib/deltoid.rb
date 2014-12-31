@@ -127,7 +127,7 @@ class Deltoid
           logger.debug("Using memcache config: #{active_config.inspect}")
           
           servers = active_config.delete(:servers)
-          MemCache.new(*([servers, active_config].flatten))
+          MemCache.new(*([servers, active_config]))
         else
           MemCache.new('localhost:11211', :multithread => true)
         end
